@@ -1,6 +1,6 @@
 {
-	"name": "ant-awesome-vue",
-	"version": "0.1.1",
+	"name": "white-awesome-vue",
+	"version": "0.1.3",
 	"description": "基于AntDesign封装",
 	"main": "lib/ant-awesome-vue.umd.min",
 	"private": false,
@@ -8,12 +8,13 @@
 		"serve": "vue-cli-service serve",
 		"prettier": "prettier --write .",
 		"build": "vue-cli-service build",
-		"package": "vue-cli-service build --target lib ./src/package/index.js --name  ant-awesome-vue --dest lib"
+		"package": "vue-cli-service build --target lib ./src/package/index.js --name  white-awesome-vue --dest lib"
 	},
 	"dependencies": {
+		"lodash": "^4.17.15",
 		"ant-design-vue": "1.6.2",
+		"element-ui": "^2.15.6",
 		"core-js": "^3.8.3",
-		"dayjs": "^1.11.3",
 		"vue": "^2.6.14",
 		"vue-i18n": "^8.26.7",
 		"vue-cropper": "^0.5.8"

@@ -42,26 +42,9 @@ export const initData = (initArray, initObj = {}) => {
 	initArray.forEach((item) => {
 		if (initObj[item.value] !== undefined) {
 			data[item.value] = initObj[item.value]
-		} else if (item.type === 'rangePicker') {
-			// 时间默认值为数组
-			data[item.value] = []
-		} else if (item.type === 'datePicker') {
-			data[item.value] = null
-		} else if (item.type === 'compact') {
-			// 组合框初始值
-			if (item.lenovoType === 'datePicker') {
-				data[item.value] = null
-			} else if (item.lenovoType === 'rangePicker') {
-				data[item.value] = []
-			}
 		} else {
 			data[item.value] = ''
 		}
-
-		// 组合框的初始化
-		// if (item.compact && item.compact.length !== 0) {
-		//   initData(item.compact)
-		// }
 	})
 	return data
 }
@@ -74,23 +57,21 @@ export const initListData = (formList, echoFormList = []) => {
 	formList.forEach((item) => {
 		if (item.initForm) {
 			// 判断有无表单配置对象
-			if (echoFormList.length !== 0) {
-				echoFormList.forEach((initItem) => {
-					if (item.name === initItem.name) {
-						data[item.name] = initData(item.initForm.formMain, initItem.initForm)
-					} else if (!item[initItem.name] && initItem[item.name]) {
-						// formList不存在这个step，echoFormList存在
-						data[initItem.name] = {}
-					} else if (!initItem[item.name] && item[initItem.name]) {
-						// formList存在这个step，echoFormList不存在
-						data[item.name] = initData(item.initForm.formMain)
-					}
-				})
-			} else {
-				// 即使没有初始化数组也不至于报错
-				// data[item.name] = {}
-				data[item.name] = initData(item.initForm.formMain)
-			}
+			echoFormList.forEach((initItem) => {
+				if (item.name === initItem.name) {
+					data[item.name] = initData(item.initForm.formMain, initItem.initForm)
+				} else if (!item[initItem.name] && initItem[item.name]) {
+					// formList不存在这个step，echoFormList存在
+					data[initItem.name] = {}
+				} else if (!initItem[item.name] && item[initItem.name]) {
+					// formList存在这个step，echoFormList不存在
+					data[item.name] = initData(item.initForm.formMain)
+				}
+			})
+		}
+		if (echoFormList.length === 0) {
+			// 即使没有初始化数组也不至于报错
+			data[item.name] = {}
 		}
 	})
 	return data

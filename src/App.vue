@@ -1,5 +1,7 @@
 <template>
-	<div><search-form :initForm="customSearchConfig"></search-form> </div>
+	<div>
+		<search-form :initForm="customSearchConfig" query-name="test"></search-form>
+	</div>
 </template>
 <script>
 import { SearchForm } from './package/ant-form'
