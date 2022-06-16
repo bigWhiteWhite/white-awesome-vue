@@ -45,9 +45,13 @@ export default {
 			type: Function,
 			default: (_) => _
 		},
+		// 外部传进来axios搜索的方法
 		apiQuery: {
-			type: Object,
-			required: true
+			type: Function,
+			default: () => ({
+				list: [],
+				total: 0
+			})
 		},
 		queryName: {
 			// 搜索表单的标识
@@ -95,12 +99,9 @@ export default {
 			this.loading = true
 			const data = {
 				...searchData,
-				...this.apiQuery.data,
 				pagination: { ...this.pageArg }
 			}
-			const { funName = 'mockTable', module = 'mock' } = this.apiQuery
-			const api = this.$axios[module]
-			const res = await api[funName](data)
+			const res = await this.apiQuery(this.queryName, data)
 			const list = this.handleData(res.list)
 			this.listData = { data: list, total: res.total }
 			this.loading = false
