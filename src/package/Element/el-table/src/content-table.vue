@@ -61,11 +61,6 @@ export default {
 		initTable: {
 			type: Object,
 			require: true
-		},
-		isNeedStorage: {
-			// 是否需要使用vuex中的搜索参数初始化表格
-			type: Boolean,
-			default: false
 		}
 	},
 	components: {
@@ -78,8 +73,7 @@ export default {
 				data: [],
 				total: 0
 			},
-			searchData: {},
-			pageArg: {}
+			searchData: {}
 		}
 	},
 	computed: {
@@ -95,11 +89,12 @@ export default {
 	methods: {
 		// 初始化表格
 		async init() {
+			const { currentPage, pageSize } = this.$refs['baseTableRef'].pageArg
 			const searchData = this.searchHandleData(this.searchData)
 			this.loading = true
 			const data = {
 				...searchData,
-				pagination: { ...this.pageArg }
+				pagination: { currentPage, pageSize }
 			}
 			const res = await this.apiQuery(this.queryName, data)
 			const list = this.handleData(res.list)
@@ -107,9 +102,7 @@ export default {
 			this.loading = false
 		},
 		// 分页器刷新表格,判断是否使用缓存查询
-		updatePage(_) {
-			const { currentPage, pageSize } = _
-			this.pageArg = { currentPage, pageSize }
+		updatePage() {
 			this.init()
 		},
 		updateSelect(_) {
@@ -117,8 +110,6 @@ export default {
 		}
 	},
 	mounted() {
-		const { currentPage, pageSize } = this.$refs['baseTableRef'].pageArg
-		this.pageArg = { currentPage, pageSize }
 		this.init()
 		// 事件总线获取搜索表单最新的值
 		this.$bus.$on(this.queryName, (_) => {

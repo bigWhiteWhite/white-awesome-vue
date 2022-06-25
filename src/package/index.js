@@ -5,7 +5,8 @@ import { AntBaseTable, AntContentTable, AntComputedFormTable, AntEditFormTable }
 import { EleBaseDialog } from './Element/el-dialog'
 import { EleBaseForm, EleSearchForm } from './Element/el-form'
 import { EleBaseUpload } from './Element/el-upload'
-import { EleBaseTable, EleContentTable, EleComputedFormTable, EleEditFormTable } from './Element/el-table'
+import { EleBaseTable, EleContentTable, EleComputedFormTable, EleEditFormTable, EleDetailTable } from './Element/el-table'
+import { EleDetailTabs } from './Element/el-tabs'
 const AntComponents = [
 	AntBaseDialog,
 	AntBaseForm,
@@ -26,7 +27,9 @@ const EleComponents = [
 	EleBaseTable,
 	EleContentTable,
 	EleComputedFormTable,
-	EleEditFormTable
+	EleEditFormTable,
+	EleDetailTable,
+	EleDetailTabs
 ]
 
 const install = (vue) => {
