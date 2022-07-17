@@ -110,10 +110,10 @@ export default {
 		}
 	},
 	mounted() {
-		this.init()
 		// 事件总线获取搜索表单最新的值
 		this.$bus.$on(this.queryName, (_) => {
 			this.searchData = _
+			this.$refs['baseTableRef'].pageArg.pageIndex = 1
 			this.init()
 		})
 	},

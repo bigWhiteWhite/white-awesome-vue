@@ -25,11 +25,11 @@
 </base-form>
 <script>
 export default {
-  data () {
-    return {
-      formData: {}
-    }
-  }
+	data() {
+		return {
+			formData: {}
+		}
+	}
 }
 </script>
 ```
@@ -142,225 +142,223 @@ emits: ['value', 'cascaderUpdate', 'selectUpdate', 'inputFocus']
 
 ```js
 export const comLayout01 = {
-  layout: {
-    // 表单外部布局
-    content: { span: 8 } // 高度设置好，不然会出现校验的时候错位
-    // , style: { height: '75px' }
-  },
-  labelProps: {
-    // 输入框以及label布局
-    labelCol: { xl: 10 }, // 总数为24
-    wrapperCol: { span: 14 },
-    labelAlign: 'left'
-  }
+	layout: {
+		// 表单外部布局
+		content: { span: 8 } // 高度设置好，不然会出现校验的时候错位
+		// , style: { height: '75px' }
+	},
+	labelProps: {
+		// 输入框以及label布局
+		labelCol: { xl: 10 }, // 总数为24
+		wrapperCol: { span: 14 },
+		labelAlign: 'left'
+	}
 }
 // 产品弹窗添加编辑配置
 const proActionForm = (vue) => {
-  return {
-    ...comLayout01,
-    formMain: [
-      {
-        value: 'productName',
-        type: 'input',
-        label: 'setProduct.productName',
-        itemOptions: {}
-      },
-      {
-        value: 'appId',
-        type: 'select',
-        label: 'setProduct.appId'
-      },
-      {
-        value: 'productType',
-        type: 'select',
-        label: 'setProduct.productType',
-        options: [
-          {
-            label: 'setProduct.defaultProduct', // 默认产品
-            value: 1
-          },
-          {
-            label: 'setProduct.arraignmentProduct', // 提审产品
-            value: 2
-          },
-          {
-            label: 'setProduct.ordinaryProduct', // 其他产品
-            value: 3
-          }
-        ]
-      },
-      {
-        value: 'availableAmount',
-        type: 'inputNum',
-        label: 'setProduct.availableAmount'
-      },
-      {
-        value: 'repayOrder',
-        type: 'cascader',
-        label: 'setProduct.repayOrder',
-        options: [
-          {
-            value: 'interestRate',
-            label: vue.$t('setProduct.interest'),
-            children: [
-              {
-                value: 'penaltyInterest',
-                label: vue.$t('setProduct.penaltyInterest'),
-                children: [
-                  {
-                    value: 'principal',
-                    label: vue.$t('setProduct.principal')
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            value: 'penaltyInterest',
-            label: vue.$t('setProduct.penaltyInterest'),
-            children: [
-              {
-                value: 'interestRate',
-                label: vue.$t('setProduct.interest'),
-                children: [
-                  {
-                    value: 'principal',
-                    label: vue.$t('setProduct.principal')
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    rules: {
-      productName: [
-        {
-          required: true,
-          message: 'Please input the productName',
-          trigger: 'change'
-        }
-      ],
-      appId: [
-        { required: true, message: 'Please input the appId', trigger: 'change' }
-      ],
-      productType: [
-        {
-          required: true,
-          message: 'Please input the productType',
-          trigger: 'change'
-        }
-      ],
-      availableAmount: [
-        {
-          validator: (rule, value, callback) => {
-            if (value === '') {
-              return callback(new Error('Please input the availableAmount'))
-            } else if (noInt(value)) {
-              return callback(new Error('availableAmount is illegal!'))
-            }
-            callback()
-          },
-          required: true,
-          trigger: 'change'
-        }
-      ],
-      minApplyAmount: [
-        {
-          validator: (rule, value, callback) => {
-            if (value === '') {
-              return callback(new Error('Please input the minApplyAmount'))
-            } else if (noInt(value)) {
-              return callback(new Error('minApplyAmount is illegal!'))
-            }
-            callback()
-          },
-          required: true,
-          trigger: 'change'
-        }
-      ],
-      interestRate: [
-        {
-          validator: (rule, value, callback) => {
-            if (value === '') {
-              return callback(new Error('Please input the interestRate'))
-            } else if (noInt(value) || value * 1 > 0.05 || value * 1 < 0) {
-              // console.log(value > 0.05)
-              return callback(new Error('interestRate is illegal!'))
-            }
-            callback()
-          },
-          required: true,
-          trigger: 'change'
-        }
-      ],
-      penaltyInterestRate: [
-        {
-          validator: (rule, value, callback) => {
-            if (value === '') {
-              return callback(new Error('Please input the penaltyInterestRate'))
-            } else if (noInt(value) || value * 1 > 0.05 || value * 1 < 0) {
-              // console.log(value > 0.05)
-              return callback(new Error('penaltyInterestRate is illegal!'))
-            }
-            callback()
-          },
-          required: true,
-          trigger: 'change'
-        }
-      ],
-      limitDays: [
-        {
-          validator: (rule, value, callback) => {
-            if (value === '') {
-              return callback(new Error('Please input the limitDays'))
-            } else if (!/^([7-9]|[1-2]\d|3[0-1])$/.test(value)) {
-              return callback(new Error('limitDays is illegal!'))
-            }
-            callback()
-          },
-          required: true,
-          trigger: 'change'
-        }
-      ],
-      repayOrder: [
-        {
-          required: true,
-          message: 'Please input the repayOrder',
-          trigger: 'change'
-        }
-      ],
-      homeAmount: [
-        {
-          validator: (rule, value, callback) => {
-            if (value === '') {
-              return callback(new Error('Please input the homeAmount'))
-            } else if (noInt(value)) {
-              return callback(new Error('homeAmount is illegal!'))
-            }
-            callback()
-          },
-          required: true,
-          trigger: 'change'
-        }
-      ],
-      applyCoolDownHours: [
-        {
-          validator: (rule, value, callback) => {
-            if (value === '') {
-              return callback(new Error('Please input the applyCoolDownHours'))
-            } else if (!/^([0-9]|[1-3]\d|4[0-8])$/.test(value)) {
-              return callback(new Error('applyCoolDownHours is illegal!'))
-            }
-            callback()
-          },
-          required: true,
-          trigger: 'change'
-        }
-      ]
-    }
-  }
+	return {
+		...comLayout01,
+		formMain: [
+			{
+				value: 'productName',
+				type: 'input',
+				label: 'setProduct.productName',
+				itemOptions: {}
+			},
+			{
+				value: 'appId',
+				type: 'select',
+				label: 'setProduct.appId'
+			},
+			{
+				value: 'productType',
+				type: 'select',
+				label: 'setProduct.productType',
+				options: [
+					{
+						label: 'setProduct.defaultProduct', // 默认产品
+						value: 1
+					},
+					{
+						label: 'setProduct.arraignmentProduct', // 提审产品
+						value: 2
+					},
+					{
+						label: 'setProduct.ordinaryProduct', // 其他产品
+						value: 3
+					}
+				]
+			},
+			{
+				value: 'availableAmount',
+				type: 'inputNum',
+				label: 'setProduct.availableAmount'
+			},
+			{
+				value: 'repayOrder',
+				type: 'cascader',
+				label: 'setProduct.repayOrder',
+				options: [
+					{
+						value: 'interestRate',
+						label: vue.$t('setProduct.interest'),
+						children: [
+							{
+								value: 'penaltyInterest',
+								label: vue.$t('setProduct.penaltyInterest'),
+								children: [
+									{
+										value: 'principal',
+										label: vue.$t('setProduct.principal')
+									}
+								]
+							}
+						]
+					},
+					{
+						value: 'penaltyInterest',
+						label: vue.$t('setProduct.penaltyInterest'),
+						children: [
+							{
+								value: 'interestRate',
+								label: vue.$t('setProduct.interest'),
+								children: [
+									{
+										value: 'principal',
+										label: vue.$t('setProduct.principal')
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		],
+		rules: {
+			productName: [
+				{
+					required: true,
+					message: 'Please input the productName',
+					trigger: 'change'
+				}
+			],
+			appId: [{ required: true, message: 'Please input the appId', trigger: 'change' }],
+			productType: [
+				{
+					required: true,
+					message: 'Please input the productType',
+					trigger: 'change'
+				}
+			],
+			availableAmount: [
+				{
+					validator: (rule, value, callback) => {
+						if (value === '') {
+							return callback(new Error('Please input the availableAmount'))
+						} else if (noInt(value)) {
+							return callback(new Error('availableAmount is illegal!'))
+						}
+						callback()
+					},
+					required: true,
+					trigger: 'change'
+				}
+			],
+			minApplyAmount: [
+				{
+					validator: (rule, value, callback) => {
+						if (value === '') {
+							return callback(new Error('Please input the minApplyAmount'))
+						} else if (noInt(value)) {
+							return callback(new Error('minApplyAmount is illegal!'))
+						}
+						callback()
+					},
+					required: true,
+					trigger: 'change'
+				}
+			],
+			interestRate: [
+				{
+					validator: (rule, value, callback) => {
+						if (value === '') {
+							return callback(new Error('Please input the interestRate'))
+						} else if (noInt(value) || value * 1 > 0.05 || value * 1 < 0) {
+							// console.log(value > 0.05)
+							return callback(new Error('interestRate is illegal!'))
+						}
+						callback()
+					},
+					required: true,
+					trigger: 'change'
+				}
+			],
+			penaltyInterestRate: [
+				{
+					validator: (rule, value, callback) => {
+						if (value === '') {
+							return callback(new Error('Please input the penaltyInterestRate'))
+						} else if (noInt(value) || value * 1 > 0.05 || value * 1 < 0) {
+							// console.log(value > 0.05)
+							return callback(new Error('penaltyInterestRate is illegal!'))
+						}
+						callback()
+					},
+					required: true,
+					trigger: 'change'
+				}
+			],
+			limitDays: [
+				{
+					validator: (rule, value, callback) => {
+						if (value === '') {
+							return callback(new Error('Please input the limitDays'))
+						} else if (!/^([7-9]|[1-2]\d|3[0-1])$/.test(value)) {
+							return callback(new Error('limitDays is illegal!'))
+						}
+						callback()
+					},
+					required: true,
+					trigger: 'change'
+				}
+			],
+			repayOrder: [
+				{
+					required: true,
+					message: 'Please input the repayOrder',
+					trigger: 'change'
+				}
+			],
+			homeAmount: [
+				{
+					validator: (rule, value, callback) => {
+						if (value === '') {
+							return callback(new Error('Please input the homeAmount'))
+						} else if (noInt(value)) {
+							return callback(new Error('homeAmount is illegal!'))
+						}
+						callback()
+					},
+					required: true,
+					trigger: 'change'
+				}
+			],
+			applyCoolDownHours: [
+				{
+					validator: (rule, value, callback) => {
+						if (value === '') {
+							return callback(new Error('Please input the applyCoolDownHours'))
+						} else if (!/^([0-9]|[1-3]\d|4[0-8])$/.test(value)) {
+							return callback(new Error('applyCoolDownHours is illegal!'))
+						}
+						callback()
+					},
+					required: true,
+					trigger: 'change'
+				}
+			]
+		}
+	}
 }
 ```
 
@@ -430,7 +428,7 @@ const proActionForm = (vue) => {
         content: { xl: 7, lg: 6, md: 12, sm: 24, xs: 24 }
         // 在这里设置style固定每一个表单项的高度,不然校验的时候会偏移(一般不在这里设置)
       })
-    }  
+    }
   }
 ```
 
@@ -447,7 +445,7 @@ const proActionForm = (vue) => {
 #### methods
 
 ```js
-  emits: ['updatePage', 'updateSelect'],  
+  emits: ['updatePage', 'updateSelect'],
   methods: {
     antTableRef () { // 返回表格ref示例
       return this.$refs.antTableRef || {}
@@ -476,55 +474,53 @@ const proActionForm = (vue) => {
 
 ```js
 export const proTableConfig = {
-  layout: {
-    content: { xl: 24 }
-  }, // 表格宽度
-  tableOptions: {
-    style: { width: '100%' }
-  },
-  rowKey: 'productId', // 列表唯一id
-  columns: [
-    {
-      dataIndex: 'productId',
-      title: 'setProduct.productId'
-    },
-    {
-      dataIndex: 'appId',
-      title: 'setProduct.appId'
-    },
-    {
-      dataIndex: 'productType',
-      title: 'setProduct.productType'
-    },
-    {
-      dataIndex: 'limitDays',
-      title: 'setProduct.limitDays'
-    },
-    {
-      dataIndex: 'afterLoanFeeName',
-      title: 'setProduct.afterLoanFeeName'
-    },
-    {
-      dataIndex: 'rate',
-      title: 'setProduct.interestRate'
-    },
-    {
-      dataIndex: 'fixedCharge',
-      title: 'setProduct.fixedCharge'
-    },
-    {
-      dataIndex: 'penaltyInterestRate',
-      title: 'setProduct.penaltyInterestRate'
-    },
+	layout: {
+		content: { xl: 24 }
+	}, // 表格宽度
+	tableOptions: {
+		style: { width: '100%' }
+	},
+	rowKey: 'productId', // 列表唯一id
+	columns: [
+		{
+			dataIndex: 'productId',
+			title: 'setProduct.productId'
+		},
+		{
+			dataIndex: 'appId',
+			title: 'setProduct.appId'
+		},
+		{
+			dataIndex: 'productType',
+			title: 'setProduct.productType'
+		},
+		{
+			dataIndex: 'limitDays',
+			title: 'setProduct.limitDays'
+		},
+		{
+			dataIndex: 'afterLoanFeeName',
+			title: 'setProduct.afterLoanFeeName'
+		},
+		{
+			dataIndex: 'rate',
+			title: 'setProduct.interestRate'
+		},
+		{
+			dataIndex: 'fixedCharge',
+			title: 'setProduct.fixedCharge'
+		},
+		{
+			dataIndex: 'penaltyInterestRate',
+			title: 'setProduct.penaltyInterestRate'
+		},
 
-    { dataIndex: 'handle', title: '操作', minWidth: '80' }
-  ],
-  current_size: comLayout02.currentSize,
-  tableShowList: comLayout02.tableShowList
+		{ dataIndex: 'handle', title: '操作', minWidth: '80' }
+	],
+	current_size: comLayout02.currentSize,
+	tableShowList: comLayout02.tableShowList
 }
 ```
-
-
 
 ### edit-table
 
@@ -588,7 +584,7 @@ props: {
 #### data
 
 ```js
-data () { 
+data () {
     return {
       ruleForm: {},
       dataSource: [...this.listData], // 表格数据
@@ -613,7 +609,7 @@ changeData (result) { // ref调用
 }
 ```
 
-##### 编辑表格中的输入框改变dataSource
+##### 编辑表格中的输入框改变 dataSource
 
 ```js
 handleChange (value, name, scope) { // 输入框发生变化
@@ -682,7 +678,7 @@ props: {
       type: Array,
       default: () => []
     },
-    layout: { // 
+    layout: { //
       type: Object,
       default: () => ({
         // a-row: 可以设置表单项是否启用flex布局
@@ -698,10 +694,10 @@ props: {
 ```js
 // 等级详情弹窗配置
 export const levelDetailDialogConfig = (vue) => {
-  return {
-    width: '90%',
-    title: vue.$t('setProduct.productDetail')
-  }
+	return {
+		width: '90%',
+		title: vue.$t('setProduct.productDetail')
+	}
 }
 ```
 
@@ -713,11 +709,11 @@ export const levelDetailDialogConfig = (vue) => {
 
 ```vue
 <base-dialog
-    v-bind="productDialogConfig"
-    ref="baseDialogRef"
-    @actionNextSubmit="actionNextSubmit"
-    @selectUpdate="hasSetLevel"
-    @switchVisible="resetFeeActionTable"
+	v-bind="productDialogConfig"
+	ref="baseDialogRef"
+	@actionNextSubmit="actionNextSubmit"
+	@selectUpdate="hasSetLevel"
+	@switchVisible="resetFeeActionTable"
 >
     <template #step1>
       <computed-table
@@ -797,43 +793,48 @@ props: {
 #### 配置项
 
 ```js
-export const proActionConfig = (vue) => {// 多级嵌套使用函数引入vue的实例
-  return {
-    dialogOptions: { // 弹窗配置
-      width: '90%'
-    },
-    formList: [ // 弹窗表单配置，第几步的表单
-      {
-        addTitle: vue.$t('setProduct.addProduct'),
-        editTitle: vue.$t('setProduct.editProduct'),
-        confirmText: 'setProduct.confirm', // 确认按钮文案
-        cancelText: 'setProduct.cancel', // 取消按钮文案
-        prevText: 'setProduct.prev', // 上一步按钮文案
-        nextText: 'setProduct.next', // 下一步按钮文案
-        step: 1, // 这是第几步才会出现的表单
-        name: 'step1', // 表单的数据绑定名
-        initForm: proActionForm(vue) // 填入base-form的基础配置
-      }
-    ],
-    echoFormList: [ // 设置默认值或者回显数据
-      { // 第一步表单的默认项
-        name: 'step1',
-        initForm: {
-          repayOrder: ['penaltyInterest', 'interestRate', 'principal'],
-          interestRate: 0,
-          penaltyInterestRate: 0.02,
-          applyCoolDownHours: 24,
-          productType: 3
-        }
-      },
-      {
-        name: 'step2', // 第二步表单的默认值
-        initForm: {
-          creditLevel: 'Z'
-        }
-      }
-    ]
-  }
+export const proActionConfig = (vue) => {
+	// 多级嵌套使用函数引入vue的实例
+	return {
+		dialogOptions: {
+			// 弹窗配置
+			width: '90%'
+		},
+		formList: [
+			// 弹窗表单配置，第几步的表单
+			{
+				addTitle: vue.$t('setProduct.addProduct'),
+				editTitle: vue.$t('setProduct.editProduct'),
+				confirmText: 'setProduct.confirm', // 确认按钮文案
+				cancelText: 'setProduct.cancel', // 取消按钮文案
+				prevText: 'setProduct.prev', // 上一步按钮文案
+				nextText: 'setProduct.next', // 下一步按钮文案
+				step: 1, // 这是第几步才会出现的表单
+				name: 'step1', // 表单的数据绑定名
+				initForm: proActionForm(vue) // 填入base-form的基础配置
+			}
+		],
+		echoFormList: [
+			// 设置默认值或者回显数据
+			{
+				// 第一步表单的默认项
+				name: 'step1',
+				initForm: {
+					repayOrder: ['penaltyInterest', 'interestRate', 'principal'],
+					interestRate: 0,
+					penaltyInterestRate: 0.02,
+					applyCoolDownHours: 24,
+					productType: 3
+				}
+			},
+			{
+				name: 'step2', // 第二步表单的默认值
+				initForm: {
+					creditLevel: 'Z'
+				}
+			}
+		]
+	}
 }
 ```
 
@@ -844,61 +845,68 @@ export const proActionConfig = (vue) => {// 多级嵌套使用函数引入vue的
 import BaseForm from '../ant-form/base-form.vue'
 import { initListData, initData } from '@/utils/ant-fun'
 export default {
-  components: {
-    BaseForm
-  },
-  data () {
-    return {
-      action: 'add',
-      step: 1,
-      visible: false,
-      formData: {},
-      disabledList: {} // 禁止输入列表,一般在编辑中使用，新增可以在配置文件中配置
-    }
-  },
-  watch: {
-    formList (_) { // 在外部添加步骤以后，需要监听，并重新赋值formData，保留之前的formData
-      const unLiveData = _.filter((item) => { // 返回新的表单
-        return !this.formData[item.name]
-      })
-      unLiveData.forEach((item) => { // 只对新的表单步骤赋予新的值，之前的不做改变
-        this.echoFormList.forEach((_) => { // 新的表单初始化
-          if (item.name === _.name) { 
-            this.$set(this.formData, item.name, initData(item.initForm.formMain, _.initForm))
-          } else if (!_[item.name]) {
-            this.$set(this.formData, item.name, nitData(item.initForm.formMain, {}))
-          }
-        })
-      })
-    }
-  },
-  computed: {
-    title () { // 根据action的不同改变title
-      let title
-      if (this.action === 'add') {
-        title = this.$t(this.stepItem().addTitle)
-      } else if (this.action === 'edit') {
-        title = this.$t(this.stepItem().editTitle)
-      }
-      return title
-    },
-    stepItem () { // 根据步数获取对应步骤的表单配置
-      return (stepKey = this.step) => {
-        const item = this.formList.find((item) => {
-          return item.step === stepKey
-        })
-        return item
-      }
-    },
-    submitFormData () {
-      return (stepKey, name) => { // 返回第几步的表单数据 @params: 第几步， 什么属性
-        return name ? this.formData[stepKey][name] : this.formData[stepKey]
-      }
-    }
-  },
-  created () {
-    this.formData = initListData(this.formList, this.echoFormList) // 数据回显，从props中引入
-  }
+	components: {
+		BaseForm
+	},
+	data() {
+		return {
+			action: 'add',
+			step: 1,
+			visible: false,
+			formData: {},
+			disabledList: {} // 禁止输入列表,一般在编辑中使用，新增可以在配置文件中配置
+		}
+	},
+	watch: {
+		formList(_) {
+			// 在外部添加步骤以后，需要监听，并重新赋值formData，保留之前的formData
+			const unLiveData = _.filter((item) => {
+				// 返回新的表单
+				return !this.formData[item.name]
+			})
+			unLiveData.forEach((item) => {
+				// 只对新的表单步骤赋予新的值，之前的不做改变
+				this.echoFormList.forEach((_) => {
+					// 新的表单初始化
+					if (item.name === _.name) {
+						this.$set(this.formData, item.name, initData(item.initForm.formMain, _.initForm))
+					} else if (!_[item.name]) {
+						this.$set(this.formData, item.name, nitData(item.initForm.formMain, {}))
+					}
+				})
+			})
+		}
+	},
+	computed: {
+		title() {
+			// 根据action的不同改变title
+			let title
+			if (this.action === 'add') {
+				title = this.$t(this.stepItem().addTitle)
+			} else if (this.action === 'edit') {
+				title = this.$t(this.stepItem().editTitle)
+			}
+			return title
+		},
+		stepItem() {
+			// 根据步数获取对应步骤的表单配置
+			return (stepKey = this.step) => {
+				const item = this.formList.find((item) => {
+					return item.step === stepKey
+				})
+				return item
+			}
+		},
+		submitFormData() {
+			return (stepKey, name) => {
+				// 返回第几步的表单数据 @params: 第几步， 什么属性
+				return name ? this.formData[stepKey][name] : this.formData[stepKey]
+			}
+		}
+	},
+	created() {
+		this.formData = initListData(this.formList, this.echoFormList) // 数据回显，从props中引入
+	}
 }
 </script>
 ```
@@ -914,7 +922,7 @@ emits: ['actionNextSubmit', 'cascaderUpdate', 'selectUpdate', 'switchVisible']
 
 ##### 修改哪个步骤的表单数据
 
-有的时候初始化数据echoFormList不可行，因为echoFormList绝对不可以改变！但是也要动态的改变某一个步骤的数据，就可以使用setFormData函数
+有的时候初始化数据 echoFormList 不可行，因为 echoFormList 绝对不可以改变！但是也要动态的改变某一个步骤的数据，就可以使用 setFormData 函数
 
 ```js
 setFormData ({ stepName, key = '', value }) {
@@ -960,7 +968,7 @@ handleAction ({ action = 'add', data = {}, disabledList = {} }) { // action/编�
 }
 ```
 
-##### cancel退出弹窗
+##### cancel 退出弹窗
 
 ```js
 cancel () { // 有一些数据不在这里面，emit告诉外面退出来，初始化其他组件的数据
@@ -1019,7 +1027,7 @@ handleConfirmClick () { // 可以选择将ref也传出去,也可以选择在这�
 
 ## 二次组件
 
-### search-from搜索
+### search-from 搜索
 
 搜索表单组件
 
@@ -1050,18 +1058,18 @@ props: {
 import BaseForm from '@/components/AntDesign/ant-form/base-form.vue'
 import { initData } from '@/utils/ant-fun'
 export default {
-  components: {
-    BaseForm
-  },
-  emits: ['reset', 'submit'],
-  created () {
-    this.formData = initData(this.initForm.formMain, this.echoForm) // 数据回显，从props中引入
-  }
+	components: {
+		BaseForm
+	},
+	emits: ['reset', 'submit'],
+	created() {
+		this.formData = initData(this.initForm.formMain, this.echoForm) // 数据回显，从props中引入
+	}
 }
 </script>
 ```
 
-##### 外部组件改变formData
+##### 外部组件改变 formData
 
 ```js
 // this.refs.#.setFormData(id, 3)
@@ -1070,7 +1078,7 @@ setFormData (name, value) {
 }
 ```
 
-##### 重置reset
+##### 重置 reset
 
 ```js
 reset (name) { // name: formData
@@ -1133,58 +1141,58 @@ search () {
 
 ```js
 export const comLayout02 = {
-  layout: {
-    // 每一个表单项所占得宽度
-    content: { xl: 6, lg: 8, md: 6, sm: 24, xs: 24 }
-  },
-  labelProps: {
-    labelCol: { span: 8 }, // 表单项中标题所占的宽度
-    wrapperCol: { span: 14 }, // 输入框所占的宽度
-    labelAlign: 'left'
-  },
-  itemStyle: { padding: '5px 0' },
-  currentSize: {
-    pageIndex: 1,
-    pageSize: 10,
-    pageSizes: ['5', '10', '20', '30', '40']
-  },
-  tableShowList: {
-    paginationOptions: { 'show-size-changer': true, 'show-quick-jumper': true } // 是否显示footer分页器
-  }
+	layout: {
+		// 每一个表单项所占得宽度
+		content: { xl: 6, lg: 8, md: 6, sm: 24, xs: 24 }
+	},
+	labelProps: {
+		labelCol: { span: 8 }, // 表单项中标题所占的宽度
+		wrapperCol: { span: 14 }, // 输入框所占的宽度
+		labelAlign: 'left'
+	},
+	itemStyle: { padding: '5px 0' },
+	currentSize: {
+		pageIndex: 1,
+		pageSize: 10,
+		pageSizes: ['5', '10', '20', '30', '40']
+	},
+	tableShowList: {
+		paginationOptions: { 'show-size-changer': true, 'show-quick-jumper': true } // 是否显示footer分页器
+	}
 }
-export const proSearchFormConfig = { // 传入base-form的配置项，具体可以参考base-form
-  ...comLayout02,
-  formMain: [ 
-    {
-      value: 'productId',
-      type: 'input',
-      label: 'setProduct.productId',
-      ruleVariate: {
-        // 输入规则的变量
-        // maxLength: 10
-      }
-    },
-    {
-      value: 'productType',
-      type: 'select',
-      label: 'setProduct.productType',
-      options: [
-        {
-          label: 'table.all', // 默认产品
-          value: ''
-        },
-        {
-          label: 'setProduct.defaultProduct', // 默认产品
-          value: 1
-        }
-      ]
-    }
-  ]
+export const proSearchFormConfig = {
+	// 传入base-form的配置项，具体可以参考base-form
+	...comLayout02,
+	formMain: [
+		{
+			value: 'productId',
+			type: 'input',
+			label: 'setProduct.productId',
+			ruleVariate: {
+				// 输入规则的变量
+				// maxLength: 10
+			}
+		},
+		{
+			value: 'productType',
+			type: 'select',
+			label: 'setProduct.productType',
+			options: [
+				{
+					label: 'table.all', // 默认产品
+					value: ''
+				},
+				{
+					label: 'setProduct.defaultProduct', // 默认产品
+					value: 1
+				}
+			]
+		}
+	]
 }
-
 ```
 
-### content-table展示表格
+### content-table 展示表格
 
 显示表格组件，有分页选择功能
 
@@ -1224,63 +1232,57 @@ import { createNamespacedHelpers } from 'vuex'
 import BaseTable from '@/components/AntDesign/ant-table/base-table.vue'
 const { mapGetters } = createNamespacedHelpers('common')
 export default {
-  components: {
-    BaseTable
-  },
-  data () {
-    return {
-      loading: false, // 加载动画
-      listData: { // 存储后端返回的表格数据
-        data: [],
-        total: 0
-      }
-    }
-  },
-  computed: {
-    ...mapGetters(['getQueryParams']),
-    trendsSlots () {
-      // 返回组件插槽，过滤掉'操作'插槽
-      const useLess = ['handle']
-      const slots = this.initTable.columns.filter((item) => {
-        return !useLess.includes(item.dataIndex)
-      })
-      return slots
-    }
-  },
-  methods: {
-    // 初始化表格
-    async init (params, _ = { pageIndex: 1, pageSize: 10 }) {
-      this.loading = true
-      const data = {
-        ...params,
-        ...this.apiQuery.data,
-        pagination: { ..._ }
-      }
-      const res = await this.$api(this.apiQuery.url, data)
-      const list = this.handleData(res.list)
-      this.listData = { data: list, total: res.total }
-      this.loading = false
-    },
-    async deleteBtnClick () {},
-    // 分页器刷新表格,判断是否使用缓存查询
-    updatePage (_) {
-      const params = this.isNeedStorage
-        ? this.getQueryParams(this.queryName)
-        : {}
-      this.init(params, { pageIndex: _.pageIndex, pageSize: _.pageSize })
-    },
-    updateSelect (_) {
-      console.log(_, '选择序号改变了')
-    }
-  },
-  created () {
-    this.isNeedStorage
-      ? this.init(
-        this.getQueryParams(this.queryName),
-        this.initTable.current_size
-      )
-      : this.init({}, this.initTable.current_size)
-  }
+	components: {
+		BaseTable
+	},
+	data() {
+		return {
+			loading: false, // 加载动画
+			listData: {
+				// 存储后端返回的表格数据
+				data: [],
+				total: 0
+			}
+		}
+	},
+	computed: {
+		...mapGetters(['getQueryParams']),
+		trendsSlots() {
+			// 返回组件插槽，过滤掉'操作'插槽
+			const useLess = ['handle']
+			const slots = this.initTable.columns.filter((item) => {
+				return !useLess.includes(item.dataIndex)
+			})
+			return slots
+		}
+	},
+	methods: {
+		// 初始化表格
+		async init(params, _ = { pageIndex: 1, pageSize: 10 }) {
+			this.loading = true
+			const data = {
+				...params,
+				...this.apiQuery.data,
+				pagination: { ..._ }
+			}
+			const res = await this.$api(this.apiQuery.url, data)
+			const list = this.handleData(res.list)
+			this.listData = { data: list, total: res.total }
+			this.loading = false
+		},
+		async deleteBtnClick() {},
+		// 分页器刷新表格,判断是否使用缓存查询
+		updatePage(_) {
+			const params = this.isNeedStorage ? this.getQueryParams(this.queryName) : {}
+			this.init(params, { pageIndex: _.pageIndex, pageSize: _.pageSize })
+		},
+		updateSelect(_) {
+			console.log(_, '选择序号改变了')
+		}
+	},
+	created() {
+		this.isNeedStorage ? this.init(this.getQueryParams(this.queryName), this.initTable.current_size) : this.init({}, this.initTable.current_size)
+	}
 }
 </script>
 ```
@@ -1348,7 +1350,7 @@ export const proTableConfig = { // 其实就是base-table的配置文件
 }
 ```
 
-### computed-table计算表格
+### computed-table 计算表格
 
 #### props
 
@@ -1381,48 +1383,50 @@ import { createNamespacedHelpers } from 'vuex'
 import EditTable from '@/components/AntDesign/ant-table/edit-table.vue'
 const { mapGetters } = createNamespacedHelpers('common')
 export default {
-  components: {
-    EditTable
-  },
-  data () {
-    return {
-      listData: {
-        data: [],
-        total: 0
-      }
-    }
-  },
-  computed: {
-    ...mapGetters(['getQueryParams']),
-    trendsSlots () { // 返回组件插槽，过滤掉'操作'插槽
-      const useLess = ['handle']
-      const slots = this.initTable.columns.filter((item) => {
-        return !useLess.includes(item.dataIndex)
-      })
-      return slots
-    },
-    handleValueChange (value, key) { // 当表格里面的表单数据发生变化的时候触发
-      // console.log(value, key)
-      return 1
-    }
-  },
-  created () {
-    // 初始化表格
-    this.listData = { ...this.listData, data: this.initData }
-  }
+	components: {
+		EditTable
+	},
+	data() {
+		return {
+			listData: {
+				data: [],
+				total: 0
+			}
+		}
+	},
+	computed: {
+		...mapGetters(['getQueryParams']),
+		trendsSlots() {
+			// 返回组件插槽，过滤掉'操作'插槽
+			const useLess = ['handle']
+			const slots = this.initTable.columns.filter((item) => {
+				return !useLess.includes(item.dataIndex)
+			})
+			return slots
+		},
+		handleValueChange(value, key) {
+			// 当表格里面的表单数据发生变化的时候触发
+			// console.log(value, key)
+			return 1
+		}
+	},
+	created() {
+		// 初始化表格
+		this.listData = { ...this.listData, data: this.initData }
+	}
 }
 </script>
 ```
 
 ##### 计算表格数据发生变化
 
-````js
+```js
 // @updateData="updateData" 由edit-table组件触发
 updateData (dataSource) {
   // 表格里面的数据发生变化时立刻传给父组件
   this.$emit('updateData', dataSource)
 }
-````
+```
 
 ##### 分页器和选择框
 
@@ -1561,14 +1565,7 @@ export const beforeFeeList = {
 #### 示例
 
 ```vue
-<a-modal
-    v-bind="detailOptions"
-    :visible="visible"
-    centered
-    destroyOnClose
-    @ok="switchVisible"
-    @cancel="switchVisible"
->
+<a-modal v-bind="detailOptions" :visible="visible" centered destroyOnClose @ok="switchVisible" @cancel="switchVisible">
     <base-card v-bind="cardList"></base-card>
     <slot name="default"></slot>
 	<template slot="footer">
@@ -1612,33 +1609,34 @@ export default {
 
 ```js
 // cardList是数组
-[
-    { // 第一个卡片
-        "type": "default",
-        "key": "12",
-        "cardOption": {
-            "title": "产品信息"
-        },
-        "itemLayout": {
-            "span": 4,
-            "style": {
-                "margin": "15px 0"
-            }
-        },
-        "contentList": [
-            {
-                "title": "产品",
-                "text": "credifio-co"
-            },
-            {
-                "title": "产品名称",
-                "text": "Kes 7 Days"
-            }
-        ]
-    },
-    { // 其他卡片
-        
-    }
+;[
+	{
+		// 第一个卡片
+		type: 'default',
+		key: '12',
+		cardOption: {
+			title: '产品信息'
+		},
+		itemLayout: {
+			span: 4,
+			style: {
+				margin: '15px 0'
+			}
+		},
+		contentList: [
+			{
+				title: '产品',
+				text: 'credifio-co'
+			},
+			{
+				title: '产品名称',
+				text: 'Kes 7 Days'
+			}
+		]
+	},
+	{
+		// 其他卡片
+	}
 ]
 ```
 
@@ -1758,16 +1756,16 @@ levelEditForm () {
  * @param 初始化表单数据,如果没有默认值的话将所有值置空
  */
 export const initData = (initArray, initObj = {}) => {
-  // 做数据回显,初始化表单数据
-  const data = {}
-  initArray.forEach((item) => {
-    if (initObj[item.value] !== undefined) {
-      data[item.value] = initObj[item.value]
-    } else {
-      data[item.value] = ''
-    }
-  })
-  return data
+	// 做数据回显,初始化表单数据
+	const data = {}
+	initArray.forEach((item) => {
+		if (initObj[item.value] !== undefined) {
+			data[item.value] = initObj[item.value]
+		} else {
+			data[item.value] = ''
+		}
+	})
+	return data
 }
 ```
 
@@ -1814,14 +1812,14 @@ switchVisible () {
 ```js
 // 更新初始化，保留之前的初始化数据，也可以增加修改
 export const initEchoFormList = (echoFormList, newEchoFormList) => {
-  echoFormList.forEach((item) => {
-    newEchoFormList.forEach((key) => {
-      if (item.name === key.name) {
-        item.initForm = { ...item.initForm, ...key.initForm }
-      }
-    })
-  })
-  return echoFormList
+	echoFormList.forEach((item) => {
+		newEchoFormList.forEach((key) => {
+			if (item.name === key.name) {
+				item.initForm = { ...item.initForm, ...key.initForm }
+			}
+		})
+	})
+	return echoFormList
 }
 ```
 
@@ -1870,13 +1868,7 @@ levelSearchFormConfig () {
 
 ```vue
 <!-- 搜索表单 -->
-<search-form
-  ref="searchFromRef"
-  queryName="setProduct"
-  :initForm="proSearchFormConfig"
-  @reset="search"
-  @submit="search"
->
+<search-form ref="searchFromRef" queryName="setProduct" :initForm="proSearchFormConfig" @reset="search" @submit="search">
   <template #add>
     <a-col>
       <a-button
@@ -1888,17 +1880,17 @@ levelSearchFormConfig () {
 </search-form>
 ```
 
-# base-dialog弹窗
+# base-dialog 弹窗
 
 ## 示例
 
 ```vue
 <base-dialog
-    v-bind="productDialogConfig"
-    ref="baseDialogRef"
-    @actionNextSubmit="actionNextSubmit"
-    @selectUpdate="hasSetLevel"
-    @switchVisible="resetFeeActionTable"
+	v-bind="productDialogConfig"
+	ref="baseDialogRef"
+	@actionNextSubmit="actionNextSubmit"
+	@selectUpdate="hasSetLevel"
+	@switchVisible="resetFeeActionTable"
 >
     <!--步骤插槽-->
     <template #step1>
@@ -1953,7 +1945,7 @@ levelSearchFormConfig () {
 
 ## 编辑回显数据
 
-适用于第一次点击编辑按钮的时候，但是如果要完成类似于点击默认产品出现第二步，而第二步的产品回显要查询得到数据，那么这个方法就不适用，可以直接使用setFormData方法改变表单数据
+适用于第一次点击编辑按钮的时候，但是如果要完成类似于点击默认产品出现第二步，而第二步的产品回显要查询得到数据，那么这个方法就不适用，可以直接使用 setFormData 方法改变表单数据
 
 ```js
 // <a-button @click="$refs.productActionRef.handleAddProduct()">
@@ -1980,14 +1972,14 @@ async handleEditProduct (_) {
 
 ## 编辑禁用输入框
 
-在添加时，是不需要禁用某些输入框的，但是编辑时需要的，所以在编辑时，除了要传数据，还要传disabledList
+在添加时，是不需要禁用某些输入框的，但是编辑时需要的，所以在编辑时，除了要传数据，还要传 disabledList
 
 ```js
 // 如果不是默认产品就可以这样
 this.$refs.baseDialogRef.handleAction({
-  action: 'edit',
-  data: { step1: res }, // !回显要加上是第几步的表单数据
-  disabledList: { step1: ['productName', 'limitDays'] } // 指定第几步的禁用
+	action: 'edit',
+	data: { step1: res }, // !回显要加上是第几步的表单数据
+	disabledList: { step1: ['productName', 'limitDays'] } // 指定第几步的禁用
 })
 ```
 
@@ -1997,29 +1989,27 @@ this.$refs.baseDialogRef.handleAction({
 
 ```js
 formMain: [
-  {
-    value: 'appId',
-    type: 'select',
-    label: 'setProduct.appId',
-    disabled: true
-  },
-  {
-    value: 'creditLevel',
-    type: 'input',
-    label: 'setProduct.creditLevel',
-    disabled: true
-  }
+	{
+		value: 'appId',
+		type: 'select',
+		label: 'setProduct.appId',
+		disabled: true
+	},
+	{
+		value: 'creditLevel',
+		type: 'input',
+		label: 'setProduct.creditLevel',
+		disabled: true
+	}
 ]
 ```
-
-
 
 ## 动态回显修改表单数据
 
 ```js
 this.$refs.baseDialogRef.setFormData({
-  stepName: 'step2',
-  value: data // !回显要加上是第几步的表单数据
+	stepName: 'step2',
+	value: data // !回显要加上是第几步的表单数据
 })
 ```
 
@@ -2092,9 +2082,9 @@ computed: {
 }
 ```
 
-## 修改初始化echoFormList
+## 修改初始化 echoFormList
 
-利用initEchoFormList函数
+利用 initEchoFormList 函数
 
 ```js
 productDialogConfig () {
@@ -2119,7 +2109,7 @@ handleAddProduct () {
 }
 ```
 
-## 确认action
+## 确认 action
 
 ```js
 // <base-dialog @actionNextSubmit="actionNextSubmit">
@@ -2152,14 +2142,14 @@ actionNextSubmit (value) {
 # computed-table
 
 ```vue
-  <computed-table
-    class="computed_table"
-    ref="computedAfterFeeRef"
-    queryName="computedAfter"
-    :initTable="afterFeeList"
-    :initData="afterFeeData"
-    :isNeedStorage="false"
-  >
+<computed-table
+	class="computed_table"
+	ref="computedAfterFeeRef"
+	queryName="computedAfter"
+	:initTable="afterFeeList"
+	:initData="afterFeeData"
+	:isNeedStorage="false"
+>
     <!-- @updateData="feeUpdateData" -->
     <template #leftTitle>
       <div>

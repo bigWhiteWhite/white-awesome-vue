@@ -46,8 +46,8 @@
 					v-if="tableShowList.paginationOptions"
 					v-bind="tableShowList.paginationOptions"
 					show-size-changer
+					:current="pageArg.pageIndex"
 					:defaultCurrent="pageArg.pageIndex"
-					:page-size="pageArg.pageSize"
 					:page-size-options="pageArg.pageSizes"
 					:total="total"
 					@change="currentUpdate"

@@ -86,7 +86,9 @@ export default {
 	created() {
 		this.formData = initData(this.initForm.formMain, this.echoForm) // 数据回显，从props中引入
 		// 挂载事件总线,使用数据总线传递数据
-		this.$bus.$emit(this.queryName, this.formData)
+		this.$nextTick(() => {
+			this.$bus.$emit(this.queryName, this.formData)
+		})
 	},
 	beforeDestroy() {
 		this.$bus.$off(this.queryName)
